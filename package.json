@@ -1,15 +1,22 @@
 {
-  "name": "mongodb-learning",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "mongodb": "^6.20.0"
-  }
+	"name": "mongodb-learning",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"seed:download": "curl https://atlas-education.s3.amazonaws.com/sampledata.archive -o sampledata.archive",
+		"seed:copy": "docker cp sampledata.archive mongodb-learning-mongo-1:/",
+		"seed:restore": "docker exec -i mongodb-learning-mongo-1 mongorestore --username root --password root --archive=sampledata.archive",
+		"seed:clean": "rimraf sampledata.archive",
+		"seed": "npm run seed:download && npm run seed:copy && npm run seed:restore && npm run seed:clean"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"mongodb": "^6.20.0"
+	},
+	"devDependencies": {
+		"rimraf": "^6.0.1"
+	}
 }
